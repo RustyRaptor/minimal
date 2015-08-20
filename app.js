@@ -2,10 +2,11 @@ module.exports = window.App = App
 
 var EventEmitter = require('events').EventEmitter
 
-var _ = require('lodash')
 var createElement = require('virtual-dom/create-element')
 var h = require('virtual-dom/h')
 var inherits = require('inherits')
+
+var Menu = require('./lib/elements/menu')
 
 inherits(App, EventEmitter)
 
@@ -15,6 +16,11 @@ function App (el, currentWindow) {
   self._notifications = 0
   self.currentWindow = currentWindow
 
+  // View instances in our app
+  self.views = {
+    menu: new Menu(self)
+  }
+
   // Initial render
   var tree = self.render()
   var rootNode = createElement(tree)
@@ -22,24 +28,11 @@ function App (el, currentWindow) {
 }
 
 App.prototype.render = function () {
+  var self = this
+  var views = self.views
+
   return h('div#minimal', [
-    h('div#titlebar', [
-      h('div#window-menu.menu', [
-        h('a'),
-        h('ul.menu-items', [
-          _.map({
-            '#fullscreen-window': 'Fullscreen',
-            '#maximize-window': 'Maximize',
-            '#minimize-window': 'Minimize',
-            '#close-window': 'Close'
-          }, function (val, key) {
-            return h('li', [
-              h('a' + key, val)
-            ])
-          })
-        ])
-      ])
-    ]),
+    h('div#titlebar', views.menu.render()),
     h('div#content', [
       h('div#channels')
     ]),
