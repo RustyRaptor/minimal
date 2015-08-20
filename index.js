@@ -12,6 +12,7 @@ function appReady () {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    frame: false,
     title: 'minimal.'
   })
   mainWindow.loadUrl(INDEX)

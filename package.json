@@ -32,6 +32,8 @@
     "standard": "^5.1.0"
   },
   "dependencies": {
+    "inherits": "^2.0.1",
+    "lodash": "^3.10.1",
     "virtual-dom": "^2.1.1"
   }
 }
