@@ -23,6 +23,20 @@ A modern IRC client built with web technologies and Node.js for OS X, Linux and 
 
 Coming soon.
 
+# Building
+
+```bash
+npm install
+npm start
+```
+
+To build the distributable
+
+```bash
+npm install
+npm run package
+```
+
 # License
 
 GNU GPLv2
