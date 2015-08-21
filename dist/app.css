@@ -276,7 +276,6 @@ body.showing-dialog #dialog-contents {
   background: #fafafa;
   font-size: 1.2em;
   padding: 1.6em;
-  height: 4.5em;
   border: none;
   border-top: 1px solid #eaeaea;
   -webkit-text-smoothing: antialiased;

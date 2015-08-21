@@ -3,10 +3,13 @@ module.exports = window.App = App
 var EventEmitter = require('events').EventEmitter
 
 var createElement = require('virtual-dom/create-element')
+var diff = require('virtual-dom/diff')
+var patch = require('virtual-dom/patch')
 var h = require('virtual-dom/h')
 var inherits = require('inherits')
 
 var Menu = require('./lib/elements/menu')
+var Composer = require('./lib/elements/composer')
 
 inherits(App, EventEmitter)
 
@@ -18,13 +21,23 @@ function App (el, currentWindow) {
 
   // View instances in our app
   self.views = {
-    menu: new Menu(self)
+    menu: new Menu(self),
+    composer: new Composer(self)
   }
 
   // Initial render
   var tree = self.render()
   var rootNode = createElement(tree)
   el.appendChild(rootNode)
+
+  function render () {
+    var newTree = self.render()
+    var patches = diff(tree, newTree)
+    rootNode = patch(rootNode, patches)
+    tree = newTree
+  }
+
+  self.on('render', render)
 }
 
 App.prototype.render = function () {
@@ -36,9 +49,7 @@ App.prototype.render = function () {
     h('div#content', [
       h('div#channels')
     ]),
-    h('textarea#message-input', {
-      placeholder: 'Message'
-    })
+    views.composer.render()
   ])
 }
 
