@@ -37,4 +37,4 @@ npm run package
 
 # License
 
-GNU GPLv2
+MIT
